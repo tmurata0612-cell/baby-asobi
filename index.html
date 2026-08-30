@@ -167,7 +167,7 @@
   <p id="hint"></p>
 </div>
 
-<button id="gateBtn" aria-label="おうちのかた設定（2秒長押し）">⚙<span id="gateRing"></span></button>
+<button id="gateBtn" aria-label="おうちのかた設定（1秒長押し）">⚙<span id="gateRing"></span></button>
 
 <!-- ペアレントパネル -->
 <div id="panel" class="screen">
@@ -721,7 +721,7 @@ const gateRing = document.getElementById('gateRing');
 let gateT0 = 0, gateRAF = 0, gateHold = null;
 
 function gateProgress() {
-  const p = Math.min(1, (performance.now() - gateT0) / 2000);
+  const p = Math.min(1, (performance.now() - gateT0) / 1000);
   gateRing.style.background =
     `conic-gradient(rgba(92,74,50,.6) ${p * 360}deg, transparent ${p * 360}deg)`;
   if (p < 1) gateRAF = requestAnimationFrame(gateProgress);
@@ -730,7 +730,7 @@ function gateStart(ev) {
   ev.preventDefault(); ev.stopPropagation();
   gateT0 = performance.now();
   gateRAF = requestAnimationFrame(gateProgress);
-  gateHold = setTimeout(openPanel, 2000);
+  gateHold = setTimeout(openPanel, 1000);
 }
 function gateCancel() {
   clearTimeout(gateHold); cancelAnimationFrame(gateRAF);
