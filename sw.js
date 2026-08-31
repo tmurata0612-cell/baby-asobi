@@ -1,4 +1,4 @@
-const CACHE = 'baby-asobi-v3';
+const CACHE = 'baby-asobi-v4';
 const ASSETS = [
   './',
   './index.html',
@@ -22,6 +22,21 @@ self.addEventListener('activate', ev => {
 
 self.addEventListener('fetch', ev => {
   if (ev.request.method !== 'GET') return;
+  /* HTMLはネットワーク優先（更新をすぐ反映）。オフライン時のみキャッシュ */
+  if (ev.request.mode === 'navigate') {
+    ev.respondWith(
+      fetch(ev.request)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE).then(c => c.put(ev.request, copy));
+          return res;
+        })
+        .catch(() =>
+          caches.match(ev.request).then(hit => hit || caches.match('./index.html')))
+    );
+    return;
+  }
+  /* その他アセットはキャッシュ優先 */
   ev.respondWith(
     caches.match(ev.request).then(hit =>
       hit ||
