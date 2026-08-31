@@ -209,7 +209,7 @@
   <p id="hint"></p>
 </div>
 
-<button id="gateBtn" aria-label="おうちのかた設定（1秒長押し）">⚙<span id="gateRing"></span></button>
+<button id="gateBtn" aria-label="おうちのかた設定（0.5秒長押し）">⚙<span id="gateRing"></span></button>
 
 <!-- ペアレントパネル -->
 <div id="panel" class="screen">
@@ -1012,8 +1012,8 @@ stageEl.addEventListener('pointermove', ev => {
   sparkle(ev.clientX, ev.clientY);
 });
 
-/* ペアレントゲート: 1秒長押し */
-const GATE_MS = 1000;
+/* ペアレントゲート: 0.5秒長押し */
+const GATE_MS = 500;
 const gateBtn = document.getElementById('gateBtn');
 const gateRing = document.getElementById('gateRing');
 let gateT0 = 0, gateRAF = 0, gateHold = null;
